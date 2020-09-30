@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("/participant")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ParticipantController {
 	
 	Logger logger = LoggerFactory.getLogger(ParticipantController.class);
@@ -31,7 +33,7 @@ public class ParticipantController {
 	@Autowired
 	ParticipantServiceImpl participantService;
 	
-	//http://localhost:8089/participant/getallparticipants
+	//http://localhost:8787/participant/getallparticipants
 	@GetMapping("/getallparticipants")
 	public List<Participant> getAllParticipants()
 	{
@@ -39,7 +41,7 @@ public class ParticipantController {
 		return participants;
 	}
 	
-	//http://localhost:8089/participant/getparticipantbyapplicationid/pid
+	//http://localhost:8787/participant/getparticipantbyapplicationid/pid
 	
 	@GetMapping("/getparticipantbyapplicationid/{pid}")
 	@HystrixCommand(fallbackMethod = "participantNotFoundErrorHandler")
@@ -49,7 +51,7 @@ public class ParticipantController {
 		return participant;
 	}
 	
-	//http://localhost:8089/participant/getparticipantbyrollno/rollno
+	//http://localhost:8787/participant/getparticipantbyrollno/rollno
 	@GetMapping("/getparticipantbyrollno/{rollno}")
 	@HystrixCommand(fallbackMethod = "participantNotFoundByRollNoErrorHandler")
 	public Participant getParticipantByRollNo(@PathVariable("rollno") String rollNo) throws ParticipantNotFoundException
@@ -58,7 +60,7 @@ public class ParticipantController {
 		return participant;
 	}
 	
-	//http://localhost:8089/participant/addnewparticipant
+	//http://localhost:8787/participant/addnewparticipant
 	@PostMapping("/addnewparticipant")
 	@HystrixCommand(fallbackMethod = "participantAdditionErrorHandler")
 	public ResponseEntity<Participant> addNewParticipant(@RequestBody Participant newParticipant) throws ParticipantAlreadyExistsException
@@ -68,7 +70,7 @@ public class ParticipantController {
 		return new ResponseEntity<Participant>(newParticipant, HttpStatus.OK);
 	}
 	
-	//http://localhost:8089/participant/updateparticipant
+	//http://localhost:8787/participant/updateparticipant
 	@PutMapping("/updateparticipant/{pid}")
 	@HystrixCommand(fallbackMethod = "participantUpdateErrorHandler")
 	public ResponseEntity<Participant> updateParticipantByApplicationId(@RequestBody Participant participant) throws ParticipantNotFoundException
@@ -78,7 +80,7 @@ public class ParticipantController {
 		return new ResponseEntity<Participant>(participant, HttpStatus.OK);
 	}
 	
-	//http://localhost:8089/participant/deleteparticipantbyid/pid
+	//http://localhost:8787/participant/deleteparticipantbyid/pid
 	@DeleteMapping("/deleteparticipantbyid/{pid}")
 	@HystrixCommand(fallbackMethod = "participantNotFoundDeletionErrorHandler")
 	public ResponseEntity<Participant> deleteParticipantByApplicationId(@PathVariable("pid") int pid) throws ParticipantNotFoundException
