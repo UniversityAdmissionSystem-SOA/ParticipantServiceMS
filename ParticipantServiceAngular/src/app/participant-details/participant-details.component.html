@@ -1,0 +1,23 @@
+<h2>Participant Details</h2> 
+
+<hr/>
+<div *ngIf="participant">
+  <div>
+    <label><b>Roll No: </b></label> {{participant.rollNo}}
+  </div>
+  <div>
+    <label><b>Email Id: </b></label> {{participant.emailId}}
+  </div>
+  <div>
+    <label><b>Application Id: </b></label> {{participant.applicationId}}
+  </div>  
+  <div>
+    <label><b>Schedule Id: </b></label> {{participant.scheduledProgramId}}
+  </div>
+</div>
+
+<br>
+<br>
+<button (click)="list()" class="btn btn-primary">Back to Participant List</button><br>
+
+

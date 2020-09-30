@@ -1,0 +1,32 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Participant List</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>RollNo</th>
+          <th>EmailId</th>
+          <th>ApplicationId</th>
+          <th>scheduledProgramId</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let participant of participants | async">
+          <td>{{participant.rollNo}}</td>
+          <td>{{participant.emailId}}</td>
+          <td>{{participant.applicationId}}</td>
+          <td>{{participant.scheduledProgramId}}</td>
+          <td><button (click)="deleteParticipant(participant.applicationId)" class="btn btn-danger">Delete</button>
+              <button (click)="updateParticipant(participant.applicationId)" class="btn btn-info" style="margin-left: 10px">Update</button>
+              <button (click)="participantDetails(participant.applicationId)" class="btn btn-info" style="margin-left: 10px">Details</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <button type="home" class="btn btn-success" routerLink="">Home</button>
+  </div>
+</div>
+
